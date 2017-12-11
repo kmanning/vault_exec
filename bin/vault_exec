@@ -25,7 +25,8 @@ resetCredentials() {
     fi
     chmod 600 $CREDENTIALS_FILE
     duration=$(readField 'lease_duration')
-    expiration=`date -v+"$duration"S +"%s"`
+    currentTime=`date +"%s"`
+    expiration=`expr $currentTime + $duration`
     echo $expiration > $EXPIRATION_FILE
     chmod 600 $EXPIRATION_FILE
 }
