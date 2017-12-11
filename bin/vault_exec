@@ -1,3 +1,5 @@
+VAULT_EXEC_VERSION=1.1
+
 EXPIRATION_FILE=~/.aws/vault_aws_creds_expiration
 CREDENTIALS_FILE=~/.aws/vault_aws_creds
 VAULT_CREDENTIALS_PATH_DEFAULT=aws/creds/developer
@@ -64,6 +66,7 @@ export AWS_SESSION_TOKEN=$(readField 'security_token')
 
 if [ "$DEBUG_VAULT_EXEC" = "true" ]
 then
+    echo vault_exec version $VAULT_EXEC_VERSION
     echo AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
     echo AWS_SECRET_ACCES_KEY=$AWS_SECRET_ACCESS_KEY
     echo AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN
