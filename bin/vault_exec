@@ -1,12 +1,19 @@
-VAULT_EXEC_VERSION=1.1
+VAULT_EXEC_VERSION=1.2
 
 EXPIRATION_FILE=~/.aws/vault_aws_creds_expiration
 CREDENTIALS_FILE=~/.aws/vault_aws_creds
 VAULT_CREDENTIALS_PATH_DEFAULT=aws/creds/developer
+# this is also the default if not specified at all
+VAULT_CREDENTIALS_DURATION_DEFAULT=1h
 
 if [ "" == "$VAULT_CREDENTIALS_PATH" ]; then
   echo "You did not specify a VAULT_CREDENTIALS_PATH, using the default $VAULT_CREDENTIALS_PATH_DEFAULT"
   VAULT_CREDENTIALS_PATH=$VAULT_CREDENTIALS_PATH_DEFAULT
+fi
+
+if [ "" == "$VAULT_CREDENTIALS_DURATION" ]; then
+  echo "You did not specify a VAULT_CREDENTIALS_DURATION, using the default $VAULT_CREDENTIALS_DURATION_DEFAULT"
+  VAULT_CREDENTIALS_DURATION=$VAULT_CREDENTIALS_DURATION_DEFAULT
 fi
 
 if [ "$DEBUG_VAULT_EXEC" = "true" ]; then
@@ -19,7 +26,7 @@ readField() {
 }
 
 resetCredentials() {
-    vault read -format=json $VAULT_CREDENTIALS_PATH > $CREDENTIALS_FILE
+    vault write -format=json $VAULT_CREDENTIALS_PATH ttl=$VAULT_CREDENTIALS_DURATION > $CREDENTIALS_FILE
     if [ "0" -ne "$?" ]; then
         echo "Failed to get new credentials from vault!  Quitting."
         rm $CREDENTIALS_FILE

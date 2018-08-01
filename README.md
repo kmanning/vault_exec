@@ -23,6 +23,13 @@ Set the Vault path to create temporary AWS credentials.  If you don't specify th
 > export VAULT_CREDENTIALS_PATH=aws/creds/my_creds_path
 ```
 
+Set the length of time you'd like your credentials to be valid for as a golang time string (``^[0-9]+(s|m|h)$``), from "1h" to "12h". If you don't specify this, the default of "1h" (one hour) will be used:
+
+```
+# Request 12-hour credentials. Optionally add this to your profile script so it's always available
+> export VAULT_CREDENTIALS_DURATION=12h
+```
+
 Authenticate against your vault instance, using your preferred method.  This example uses LDAP.
 
 ```
