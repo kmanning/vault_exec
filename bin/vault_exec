@@ -1,4 +1,4 @@
-VAULT_EXEC_VERSION=1.3
+VAULT_EXEC_VERSION=1.4
 
 help(){
   echo "Usage: $SCRIPT [options] (command to execute)"
